@@ -1,0 +1,7 @@
+# Opt-in test tools, added to the trpn env made from environment.yml:
+#   conda env update -n trpn -f environment-dev.yml
+name: trpn
+channels:
+  - conda-forge
+dependencies:
+  - pytest

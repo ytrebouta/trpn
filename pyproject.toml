@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "trpn"
+version = "0.1.0"
+description = "An RPN calculator for the terminal."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "ytrebouta" }]
+requires-python = ">=3.14"
+keywords = ["rpn", "calculator", "terminal", "tui", "decimal"]
+# maupertuis is not on PyPI: installed from its GitHub repository.
+dependencies = [
+    "blessed",
+    "maupertuis @ git+https://github.com/ytrebouta/maupertuis",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+]
+
+[project.scripts]
+trpn = "trpn.calculator:start"
+
+[project.urls]
+Repository = "https://github.com/ytrebouta/trpn"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/trpn"]
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+    "src/trpn",
+    "tests",
+    "LICENSE",
+    "README.md",
+    "pyproject.toml",
+    "environment.yml",
+    "environment-dev.yml",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-m 'not bench'"
+markers = [
+    "bench: benchmarks with machine-dependent time budgets, skipped by default (run with -m bench)",
+]
