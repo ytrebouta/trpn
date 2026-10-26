@@ -335,6 +335,26 @@ def test_huge_exponent_denominators():
 	assert not bad, bad
 
 
+def test_power_of_ten_base_long_exponent():
+	"""A power-of-ten base with an exponent of many digits: right result, and fast. The exactness
+	check once built 10^3703701 to compare it with 1 (power(0.001, -1234567E-70): 1 s, 14 s
+	with one more digit)."""
+
+	ctx		= Context(prec=28)
+	slow	= []
+	bad		= []
+	for x in ('-1234567E-70', '-12345678E-70', '-123456789E-70', '1234567E-70'):
+		start	= perf_counter()
+		got		= dmath.power(D('0.001'), D(x), ctx=ctx)
+		elapsed	= perf_counter() - start
+		if got != 1:
+			bad.append((x, str(got)))
+		if elapsed > 0.05:
+			slow.append((x, f"{elapsed * 1000:.0f} ms"))
+	assert not bad, bad
+	assert not slow, slow
+
+
 def test_long_exact_powers():
 	"""An exact result longer than the precision is rounded like any other: 3^70 has 34 digits."""
 

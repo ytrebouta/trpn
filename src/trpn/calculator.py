@@ -892,11 +892,11 @@ class RpnCalculator:
 		if not exp_digits:
 			return True
 
-		value = Decimal(text)										# exact: a string needs no context
-		if value == 0:
+		mant_value	= Decimal(mantissa)							# the mantissa alone: Decimal refuses exponents past 18 digits
+		if mant_value == 0:
 			return True
 
-		adjusted	= value.adjusted()								# exponent of the first digit
+		adjusted	= mant_value.adjusted() + int(exponent)		# exponent of the first digit
 		stg_ctx		= self.stg_ctx
 		return stg_ctx.Emin <= adjusted <= stg_ctx.Emax
 
@@ -915,17 +915,17 @@ class RpnCalculator:
 		if not mant_digits:											# '-', '.', '-.'
 			return Decimal(0)
 
+		mant_value = Decimal(mantissa)								# exact: a string needs no context
+
+		if mant_value == 0:											# -0, -0.0, 0E5: before any exponent, which
+			return Decimal(0)										# Decimal refuses past 18 digits (0E99…9)
+
 		if exp_digits:
 			text = infield
 		else:														# '1E', '1E-': the mantissa alone
 			text = mantissa
 
-		value = Decimal(text)										# exact: a string needs no context
-
-		if value == 0:												# -0, -0.0, 0E5
-			return Decimal(0)
-
-		return value
+		return Decimal(text)
 
 	def fn_infclear(self):
 		"""s Backspace during an entry: empties the input field. The entry stays under way."""

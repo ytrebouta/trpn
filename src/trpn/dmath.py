@@ -277,7 +277,8 @@ def _exact_power(base, x, invert, ctx):
 
 	product		= (c_m ** den) * (b_m ** -num)
 	power_ten	= -(c_e * den + b_e * -num)
-	if power_ten >= 0 and product == 10 ** power_ten:
+	beyond		= 3 * power_ten >= product.bit_length()				# 10^k > 2^(3k): past the product already
+	if power_ten >= 0 and not beyond and product == 10 ** power_ten:
 		return shortest
 	return None
 
