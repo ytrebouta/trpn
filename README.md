@@ -1,3 +1,8 @@
+<p>
+  <img src="docs/fastuse.gif" alt="A series of operations on the stack" width="49%">
+  <img src="docs/resizedemo.gif" alt="Resizing the terminal: numbers adapt to the width" width="49%">
+</p>
+
 # trpn - RPN calculator for the terminal
 
 ## Introduction
@@ -17,13 +22,6 @@ Stack values automatically switch to scientific notation when there's not enough
 - Expected to run in any modern terminal, including through SSH.
 
 This project is currently in its first version; more features are planned.
-
-## Gallery
-
-<p>
-  <img src="docs/fastuse.gif" alt="A series of operations on the stack" width="49%">
-  <img src="docs/resizedemo.gif" alt="Resizing the terminal: numbers adapt to the width" width="49%">
-</p>
 
 *Colors and other visual helpers are on the way.*
 
